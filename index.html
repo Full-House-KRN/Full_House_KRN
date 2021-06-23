@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: "en-US" }}">
+<head>
+    <title>FAMILY KRN</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/style.css"> 
+    
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+    <script type="text/javascript" src="config.js"></script>
+    <script src="scripts/userData.js"></script>
+    <!-- <script src="https://raw.githubusercontent.com/Full-House-KRN/private.Full_House_KRN/dev/scripts/validation.js?token=APVY637KJRVRGBII2IOTAMDAZRV2M"></script>
+    -->
+</head>
+<body>
+  <script>
+    
+  </script>
+    <div class="login-page">
+        <div class="form">
+          <div class="login">
+            <div class="login-header">
+              <h3>LOGIN or SIGNUP</h3>
+              <p>Please enter your credentials to login.</p>
+            </div>
+          </div>
+          <div>
+            <input type="email"  placeholder="email" id="email"/>
+            <input type="password"  placeholder="password" id="password"/>
+
+            <button class="button" onclick="signUp()" id="signup">sign up</button><br>
+            <br> 
+            <button class="button" onclick="signIn()" id="signin">sign in</button>
+            <br><br> 
+            <button class="button" onclick="signOut()" id="signout">sign out</button>
+
+          </div>
+        </div>
+    </div>
+  
+</body>
+</html>
