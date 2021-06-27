@@ -1,0 +1,232 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i');
+
+
+.body {
+  max-width: 1000px;
+  margin: auto;
+  background-color:rgb(255, 255, 255);
+}
+
+.tree ul {
+    padding-top: 20px;
+    position: relative;
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+}
+
+.tree li {
+    float: left;
+    text-align: center;
+    list-style-type: none;
+    position: relative;
+    padding-top:20px;
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+}
+
+    /*We will use ::before and ::after to draw the connectors*/
+
+.tree li::before, .tree li::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 50%;
+    border-top: 2px solid rgb(168, 174, 180);
+    width: 50%;
+    height: 20px;
+    /*box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);*/
+}
+
+.tree li::after {
+    right: auto;
+    left: 50%;
+    border-left: 2px solid rgb(168, 163, 214);
+}
+
+/*We need to remove left-right connectors from elements without
+any siblings*/
+.tree li:only-child::after, .tree li:only-child::before {
+    display: none;
+}
+
+/*Remove space from the top of single children*/
+.tree li:only-child {
+    padding-top: 0;
+}
+
+/*Remove left connector from first child and
+right connector from last child*/
+.tree li:first-child::before, .tree li:last-child::after {
+    border: 0 none;
+}
+/*Adding back the vertical connector to the last nodes*/
+.tree li:last-child::before {
+    border-right: 2px solid rgb(168, 174, 180);
+    border-radius: 0 5px 0 0;
+    -webkit-border-radius: 0 5px 0 0;
+    -moz-border-radius: 0 5px 0 0;
+}
+
+.tree li:first-child::after {
+    border-radius: 5px 0 0 0;
+    -webkit-border-radius: 5px 0 0 0;
+    -moz-border-radius: 5px 0 0 0;
+}
+
+/*Time to add downward connectors from parents*/
+.tree ul ul::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    border-left: 2px solid rgb(129, 129, 134);
+    width: 0;
+    height: 20px;
+}
+
+.tree li a {
+    border: 2px solid rgb(159, 196, 231);
+    padding: 5px 5px;
+    text-decoration: none;
+    color: rgb(36, 29, 29);
+    font-family: arial, verdana, tahoma;
+    font-size: 16px;
+    display: inline-block;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    transition: all 0.5s;
+    -webkit-transition: all 0.65s;
+    -moz-transition: all 0.5s;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24),
+    0 8px 8px 0 rgba(0, 0, 0, 0.29), 0 15px 15px 0 rgba(0, 0, 0, 0.38);
+}
+
+/*Time for some hover effects*/
+/*We will apply the hover effect the the lineage of the element also*/
+.tree li a:hover, .tree li a:hover + ul li a {
+    background: #8cc0e7;
+    color: #000;
+    border: 3px solid  #8cc0e7;
+}
+/*Connector styles on hover*/
+.tree li a:hover + ul li::after,
+.tree li a:hover + ul li::before,
+.tree li a:hover + ul::before,
+.tree li a:hover + ul ul::before {
+    border-color:  rgb(29, 42, 185);
+}
+
+/*Thats all. I hope you enjoyed it.
+    Thanks :)*/
+
+/* Title animation */
+.container {
+    width: 100%;
+    margin: auto;
+    font-weight: 900;
+    
+    text-align: center;
+    padding: 0 0 40px;
+  }
+
+.three span {
+    color: #b10e81;
+    opacity: 0;
+    transform: translate(-300px, 0) scale(0);
+    animation: sideSlide .6s forwards;
+  }
+  
+  @keyframes sideSlide {
+    60% {
+      transform: translate(20px, 0) scale(1);
+      color: #00f0ff;
+    }
+  
+    80% {
+      transform: translate(20px, 0) scale(1);
+      color: #00f0ff;
+    }
+  
+    99% {
+      transform: translate(0) scale(1.2);
+      color: #b10e81;
+    }
+  
+    100% {
+      transform: translate(0) scale(1);
+      opacity: 1;
+      color: #b10e81;
+    }
+  }
+  
+  .animate {
+    font-size: 50px;
+    margin: 100px 0 0;
+    border-bottom: 2px solid rgb(179, 177, 177);
+  }
+  
+  .animate span {
+    display: inline-block;
+  }
+  
+  .animate span:nth-of-type(2) {
+    animation-delay: .05s;
+  }
+  .animate span:nth-of-type(3) {
+    animation-delay: .1s;
+  }
+  .animate span:nth-of-type(4) {
+    animation-delay: .15s;
+  }
+  .animate span:nth-of-type(5) {
+    animation-delay: .2s;
+  }
+  .animate span:nth-of-type(6) {
+    animation-delay: .25s;
+  }
+  .animate span:nth-of-type(7) {
+    animation-delay: .3s;
+  }
+  .animate span:nth-of-type(8) {
+    animation-delay: .35s;
+  }
+  .animate span:nth-of-type(9) {
+    animation-delay: .4s;
+  }
+  .animate span:nth-of-type(10) {
+    animation-delay: .45s;
+  }
+  .animate span:nth-of-type(11) {
+    animation-delay: .5s;
+  }
+  .animate span:nth-of-type(12) {
+    animation-delay: .55s;
+  }
+  .animate span:nth-of-type(13) {
+    animation-delay: .6s;
+  }
+  .animate span:nth-of-type(14) {
+    animation-delay: .65s;
+  }
+  .animate span:nth-of-type(15) {
+    animation-delay: .7s;
+  }
+  .animate span:nth-of-type(16) {
+    animation-delay: .75s;
+  }
+  .animate span:nth-of-type(17) {
+    animation-delay: .8s;
+  }
+  .animate span:nth-of-type(18) {
+    animation-delay: .85s;
+  }
+  .animate span:nth-of-type(19) {
+    animation-delay: .9s;
+  }
+  .animate span:nth-of-type(20) {
+    animation-delay: .95s;
+  }
+  
