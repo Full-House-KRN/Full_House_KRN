@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+        <link rel="stylesheet" href="assets/profile_style.css" >
+        <script type="text/javascript" src="config.js"></script>
+
+    </head>
+    <body>
+
+        <div id="card">
+            <h1 id="name"></h1>
+            <div class="image-crop">
+              <img id="avatar" src=""></img>
+            </div>
+        
+            <div id="bio">
+              <p>Hello there, click view details to see my details</p>
+            </div>
+            
+            <div>
+                <table cellspacing = "25px">
+                    <tr>
+                      <td><div id="dob"></div></td>
+                      <td><div id="age"></div></td>
+                    </tr>
+                
+                    <tr>
+                      <td><div id="job"></div></td>
+                    
+                    </tr>
+                    
+                 </table>
+            </div>
+             
+         
+            <div id="buttons">
+              <button id="view">View details</button>
+            </div>
+          
+        </div>
+          
+
+
+        <script>
+        if (typeof(Storage) !== "undefined") {
+            // Retrieve
+        document.getElementById("name").innerHTML = localStorage.getItem("name");
+        //document.getElementById("validate").value = document.getElementById("result").innerHTML;
+        } else {
+        document.getElementById("result").innerHTML = "Browser does not support Web Storage.";
+        }
+
+        var apiKey = config.apiKey;
+        var authDomain = config.authDomain;
+        var projectId = config.projectId;
+        var storageBucket = config.storageBucket;
+        var messagingSenderId = config.messagingSenderId;
+        var appId = config.appId;
+        var databaseURL = config.databaseURL;
+
+        var firebaseConfig = {
+            apiKey,
+            authDomain,
+            databaseURL,
+            projectId,
+            storageBucket,
+            messagingSenderId,
+            appId
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        document.getElementById("view").onclick = function() {
+            var username = document.getElementById("name").innerHTML;
+            //var username="Dad";
+            firebase.database().ref(username).on('value',function(snapshot){
+                document.getElementById("age").innerHTML = snapshot.val().age;
+                document.getElementById("job").innerHTML = snapshot.val().job;
+              document.getElementById("dob").innerHTML = snapshot.val().DOB;
+              document.getElementById("avatar").src = snapshot.val().avatar;
+            });
+        }
+        </script>
+    
+        
+    </body>
+
+</html>
