@@ -40,7 +40,9 @@
                 </select>
                 
                 <br><br>
-                <button class="button" id="insert">Insert</button>
+                 Kindly press the <strong>submit</strong> once
+                 <br><br>
+                <button class="button" id="insert">submit</button>
               </div>
             </div>
         </div>
@@ -95,8 +97,7 @@
                 genv = document.getElementById('gender').value;
             }
             
-            
-            
+
             
             document.getElementById('insert').onclick = function (){
                 Ready();
@@ -104,9 +105,9 @@
                     var avatar = "https://image.flaticon.com/icons/png/128/1999/1999625.png";
                 }
                 else{
-                    var avatar = "https://image.flaticon.com/icons/png/128/1999/1999628.png"
+                    var avatar = "https://image.flaticon.com/icons/png/128/1999/1999628.png";
                 }
-                firebase.database().ref('KRN/' + namev).set({
+                firebase.database().ref('KRN family/' + namev).set({
                     Age: 'Age -' + agev +' years',
                     Blood: 'Blood Group - ' + bgv,
                     DOB: 'DOB - ' + dobv,
@@ -114,8 +115,15 @@
                     avatar : avatar
                     
                 })
+                if(!window.Notification) {
+                    console.log('Browser does not support notifications.');
+                } else {
+                    // display message here
+                    alert('Data updated, Thank You :)')
+                    
+                }
             }
-
+            
         </script>
     </body>
 </html>
