@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Image uploader</title>
+        <style>
+            img {
+                width: 300px;
+                height: 300px;
+                border: 2px solid blue
+            }
+        </style>
+    </head>
+    <body>
+        Image Name <input type="text" id="namebox"> <br><br>
+        <img id="myimg" > <label id="upProgress"></label> <br><br>
+
+        <button id="select"> Select image</button>
+        <button id="upload"> Upload image</button>
+        <button id="retrieve">Retrieve</button>
+
+        <!-- ***************************** Firebase config ************************************-->
+        <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-storage.js"></script>
+        <script type="text/javascript" src="config.js"></script>
+
+        
+        <script>
+            var imageName, imgUrl;
+            var files=[];
+            var reader;
+            
+            var apiKey = config.apiKey;
+            var authDomain = config.authDomain;
+            var projectId = config.projectId;
+            var storageBucket = config.storageBucket;
+            var messagingSenderId = config.messagingSenderId;
+            var appId = config.appId;
+            var databaseURL = config.databaseURL;
+
+            var firebaseConfig = {
+                apiKey,
+                authDomain,
+                databaseURL,
+                projectId,
+                storageBucket,
+                messagingSenderId,
+                appId
+            };
+            // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
+
+            // Select Images 
+
+            document.getElementById('select').onclick = function(e){
+
+                var input = document.createElement('input');
+                input.type ='file';
+                
+
+                input.onchange = e => {
+                    files = e.target.files;
+                    reader = new FileReader();
+                    reader.onload = function(){
+                        document.getElementById('myimg').src = reader.result;
+                    }
+                    reader.readAsDataURL(files[0]);
+                }
+                input.click();
+            }
+
+            // Upload Process
+
+            document.getElementById('upload').onclick = function(){
+                imageName = document.getElementById('namebox').value;
+                var uploadTask = firebase.storage().ref('Images/' + imageName + '.png').put(files[0]);
+                
+                uploadTask.on('state_changed',function(snapshot){
+                    var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    document.getElementById('upProgress').innerHTML = 'Upload'+progress+'%';
+                    },
+
+                    function(error){
+                        alert('Error in Uploaing the image');
+                    },
+
+                    function(){
+                        uploadTask.snapshot.ref.getDownloadURL().then(function(url){
+                            imgUrl = url;
+                        
+
+                            firebase.database().ref('Pictures/'+imageName).set({
+                                Name: imageName,
+                                Link: imgUrl
+                            
+                            });
+                            alert('Image Uploaded successfully');
+                        });
+                        }
+                    );
+            }
+
+            document.getElementById('retrieve').onclick = function(){
+                imageName = document.getElementById('namebox').value;
+                firebase.database().ref('Pictures/'+imageName).on('value',function(snapshot){
+                    document.getElementById('myimg').src = snapshot.val().Link;
+                });
+            }
+        </script>
+    </body>
+</html>
