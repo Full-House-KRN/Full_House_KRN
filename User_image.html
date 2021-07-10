@@ -4,22 +4,30 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="assets/style.css">
         <title>Image uploader</title>
-        <style>
-            img {
-                width: 300px;
-                height: 300px;
-                border: 2px solid blue
-            }
-        </style>
+        
     </head>
     <body>
-        Image Name <input type="text" id="namebox"> <br><br>
-        <img id="myimg" > <label id="upProgress"></label> <br><br>
+        <div class="form">
+            <div class="login-header">
+                <h3>User Profile image</h3>
+                <p>Please Upload your profile image</p>
+            </div>
 
-        <button id="select"> Select image</button>
-        <button id="upload"> Upload image</button>
-        <button id="retrieve">Retrieve</button>
+            <input type="text" id="namebox" placeholder="Image Name"> <br><br>
+            
+            <div class="imgContainer">
+                <img id="myimg" width="150" height="150"><br>
+                <strong><span id='Note'></span></strong><br>
+                <label id="upProgress"></label>
+            </div> <br><br>
+
+            <button id="select" class="button"> Select image</button><br><br>
+            <button id="upload"  class="button"> Upload image</button><br><br>
+            <button id="retrieve"  class="button">Retrieve</button>
+        </div>
+        
 
         <!-- ***************************** Firebase config ************************************-->
         <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
@@ -76,12 +84,14 @@
             // Upload Process
 
             document.getElementById('upload').onclick = function(){
+                document.getElementById('Note').innerHTML = "Please wait, till the image is uploaded";
+
                 imageName = document.getElementById('namebox').value;
                 var uploadTask = firebase.storage().ref('Images/' + imageName + '.png').put(files[0]);
                 
                 uploadTask.on('state_changed',function(snapshot){
                     var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                    document.getElementById('upProgress').innerHTML = 'Upload'+progress+'%';
+                    document.getElementById('upProgress').innerHTML = 'Upload'+ ' '+progress+'%';
                     },
 
                     function(error){
@@ -91,23 +101,23 @@
                     function(){
                         uploadTask.snapshot.ref.getDownloadURL().then(function(url){
                             imgUrl = url;
-                        
+                            
+                            firebase.database().ref('KRN family/' +  imageName).update({ avatar: imgUrl});
 
-                            firebase.database().ref('Pictures/'+imageName).set({
-                                Name: imageName,
-                                Link: imgUrl
+                            
+                            document.getElementById('Note').innerHTML = "Image uploaded Thank you";
+                            
+                            alert('Image Uploaded successfully');
                             
                             });
-                            alert('Image Uploaded successfully');
-                        });
                         }
                     );
             }
 
             document.getElementById('retrieve').onclick = function(){
                 imageName = document.getElementById('namebox').value;
-                firebase.database().ref('Pictures/'+imageName).on('value',function(snapshot){
-                    document.getElementById('myimg').src = snapshot.val().Link;
+                firebase.database().ref('KRN family/' +  imageName).on('value',function(snapshot){
+                    document.getElementById('myimg').src = snapshot.val().avatar;
                 });
             }
         </script>

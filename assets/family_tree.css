@@ -2,13 +2,15 @@
 
 
 .body {
+  max-width: 700px;
+  margin: 0 auto;
+  background-color:#e2a8e2;
   
-  background-color:rgb(255, 255, 255);
 }
 
 img {
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
 }
 .tree ul {
     padding-top: 20px;
@@ -93,7 +95,8 @@ right connector from last child*/
     
     border: 2px solid rgb(159, 196, 231);
     padding: 1px;
-    
+    width: 60px;
+   height: 60px;
     text-decoration: none;
     color: rgb(36, 29, 29);
     font-family: arial, verdana, tahoma;

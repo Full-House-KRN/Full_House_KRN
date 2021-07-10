@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
         <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
@@ -14,28 +18,28 @@
         <div id="card">
             <h1 id="name"></h1>
             <div class="image-crop">
-              <img id="avatar" src=""></img>
+              <img id="avatar" src="" width="200" height="200"></img>
             </div>
         
             <div id="bio">
-              <p>Hello there, click view details to see my details</p>
+              <p>Hello there, click <strong>view details</strong> to see my details</p>
             </div>
             
             <div>
-                <table cellspacing = "25px">
-                    <tr>
-                      <td><div id="dob"></div></td>
-                      <td><div id="age"></div></td>
-                    </tr>
-                
-                    <tr>
-                      <td><div id="job"></div></td>
-                    
-                    </tr>
-                    
-                 </table>
+              <table cellspacing = "25px">
+                  <tr>
+                    <td><div id="dob"></div></td>
+                    <td><div id="age"></div></td>
+                  </tr>
+              
+                  <tr>
+                    <td><div id="Blood"></div></td>
+                    <td><div id="Spouse"></div></td>
+                  </tr>
+                  
+               </table>
             </div>
-             
+           
          
             <div id="buttons">
               <button id="view">View details</button>
@@ -77,11 +81,12 @@
         document.getElementById("view").onclick = function() {
             var username = document.getElementById("name").innerHTML;
             //var username="Dad";
-            firebase.database().ref(username).on('value',function(snapshot){
-                document.getElementById("age").innerHTML = snapshot.val().age;
-                document.getElementById("job").innerHTML = snapshot.val().job;
-              document.getElementById("dob").innerHTML = snapshot.val().DOB;
-              document.getElementById("avatar").src = snapshot.val().avatar;
+            firebase.database().ref('KRN family/' +  username).on('value',function(snapshot){
+                document.getElementById("age").innerHTML = snapshot.val().Age;
+                document.getElementById("Blood").innerHTML = snapshot.val().Blood;
+                document.getElementById("dob").innerHTML = snapshot.val().DOB;
+                document.getElementById("Spouse").innerHTML = snapshot.val().Spouse;
+                document.getElementById("avatar").src = snapshot.val().avatar;
             }),
             
             firebase.database().ref('Pictures/'+imageName).on('value',function(snapshot){
